@@ -56,3 +56,14 @@ temp/
 # Don't ship the Dockerfile/dockerignore into the image
 Dockerfile
 .dockerignore
+
+# Model directories not used by Wav2Lip+paste (kept locally from experiments).
+# The Dockerfile uses only models/wav2lip/ and models/insightface/.
+models/gfpgan/
+models/musetalkV15/
+models/sd-vae/
+models/whisper/
+models/face-parse-bisent/
+
+# Local pycache
+__pycache__/
