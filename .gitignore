@@ -1,0 +1,11 @@
+# Model weights — downloaded by CI or by download_weights.sh on host.
+# Excluded from git to keep repo small; included in the Docker build context.
+models/
+
+# Local artifacts
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+*.log

@@ -1,0 +1,58 @@
+# Virtualenvs
+.venv/
+venv/
+env/
+ENV/
+
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+build/
+dist/
+pip-wheel-metadata/
+
+# VCS
+.git/
+.gitignore
+.gitattributes
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Test / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.mypy_cache/
+.ruff_cache/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Docs / misc
+*.md
+!README.md
+LICENSE
+
+# Local artifacts
+*.log
+*.tar
+*.tar.xz
+*.zip
+tmp/
+temp/
+
+# Don't ship the Dockerfile/dockerignore into the image
+Dockerfile
+.dockerignore
