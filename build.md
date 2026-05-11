@@ -1,0 +1,1 @@
+docker build -t yuki029/togi:v1 .
