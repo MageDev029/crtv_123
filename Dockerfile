@@ -6,7 +6,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
     INSIGHTFACE_HOME=/app/models/insightface
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        python3.10 python3.10-venv python3-pip \
+        python3.10 python3.10-dev python3.10-venv python3-pip \
+        build-essential \
         curl git xz-utils libgl1-mesa-glx libglib2.0-0 libsndfile1 \
     && rm -rf /var/lib/apt/lists/* \
     && ln -sf /usr/bin/python3.10 /usr/bin/python
