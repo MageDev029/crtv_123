@@ -2,6 +2,12 @@
 # Excluded from git to keep repo small; included in the Docker build context.
 models/
 
+# Experiment runner — not used by production worker, keep local-only.
+latentsync_runner.py
+
+# Strategy doc — don't publish what we learned to a repo competitors can mirror.
+discussion.md
+
 # Local artifacts
 .venv/
 __pycache__/

@@ -64,6 +64,13 @@ models/musetalkV15/
 models/sd-vae/
 models/whisper/
 models/face-parse-bisent/
+models/realesrgan/
+
+# Experiment runners not used by the production worker
+latentsync_runner.py
+
+# Strategy / discussion docs — keep local, don't ship in image
+discussion.md
 
 # Local pycache
 __pycache__/

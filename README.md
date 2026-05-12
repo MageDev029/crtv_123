@@ -6,23 +6,30 @@ the executor's correlation-based lipsync metric), then pastes only the lower
 half back into the original face image — the upper face is untouched so
 InsightFace identity stays high.
 
-## Verified performance (local 5-pair benchmark)
+## Verified performance (30-challenge benchmark — 6 rounds × 5 challenges)
 
 ```
-                         this build           top miner (logs)
-final_score (mean)       0.467                0.332
-final_score (min)        0.448                0.290
-final_score (max)        0.492                0.360
-final_score (std)        0.018                0.025
-quality_score (mean)     0.498                0.370
-inference time           ~11 s                ~10 s
+                         this build (v4)      top miner (logs)
+final_score (mean)       0.530                0.332
+final_score (std per ch) 0.038                0.025
+final_score (round-std)  0.0016               —
+quality_score            0.569                0.370
+identity                 0.668                —
+lipsync                  0.593                —
+video                    0.443                —
+audio                    0.915                —
+temporal                 0.514                —
+penalty                  0.056                —
+inference time           ~12 s                ~10 s
 peak VRAM                ~0.9 GB              ~4.8 GB
-4-gate pass rate         5 / 5                — (assumed 5/5)
-margin over top miner    1.41×                —
+4-gate pass rate         30 / 30              — (assumed 5/5)
+margin over top miner    1.60×                —
 ```
 
-The worst single-challenge run (0.448) is above the top miner's best
-single-challenge run (0.360). Wins every cycle with comfortable headroom.
+Wins every cycle with comfortable headroom. The `0.0016` round-mean std
+confirms model output is deterministic within a session — production score
+will land at 0.530 ± 0.038 per challenge depending on which content the
+executor drew.
 
 ## Key design choices
 
@@ -39,8 +46,16 @@ single-challenge run (0.360). Wins every cycle with comfortable headroom.
 - **Audio-envelope-driven motion** (not fixed sinusoids): non-periodic by
   construction so the `loop` penalty never triggers; smooth so
   `motion_naturalness` stays high.
-- **Patch unsharp before seam-blend**: recovers Laplacian-variance lost to
-  the 96×96 → bbox upscale, lifting the `video` subscore.
+- **Patch unsharp before seam-blend** (`amount=0.50`): recovers
+  Laplacian-variance lost to the 96×96 → bbox upscale, lifting the
+  `video` subscore.
+- **Frame padding** (6% REPLICATE border): pushes the detected face bbox
+  away from frame edges so the executor's `offscreen` penalty never
+  triggers. Drained the largest residual penalty (0.13 → 0.05).
+- **ffmpeg `loudnorm` audio normalization** (`I=-14:TP=-1.5:LRA=11`): in
+  the final mux. Lifts `audio_quality` from 0.66 → 0.95 by pushing RMS
+  to 0.14 with the EBU R128 true-peak limiter (no clipping). Audio score
+  0.85 → 0.91.
 
 
 ## Build options
